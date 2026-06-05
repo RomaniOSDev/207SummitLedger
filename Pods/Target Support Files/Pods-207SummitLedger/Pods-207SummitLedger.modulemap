@@ -1,0 +1,6 @@
+framework module Pods_207SummitLedger {
+  umbrella header "Pods-207SummitLedger-umbrella.h"
+
+  export *
+  module * { export * }
+}
