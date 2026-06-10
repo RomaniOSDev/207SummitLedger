@@ -81,6 +81,7 @@ struct DocumentChecklistView: View {
             }
             .padding(.horizontal, TravelCardStyle.horizontalPadding)
             .padding(.vertical, 12)
+            .tabBarScrollContentPadding()
             .padding(.bottom, 72)
         }
         .clearScrollBackground()

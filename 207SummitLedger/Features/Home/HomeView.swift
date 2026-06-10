@@ -73,6 +73,7 @@ struct HomeView: View {
                     }
                     .padding(.horizontal, TravelCardStyle.horizontalPadding)
                     .padding(.vertical, 12)
+                    .tabBarScrollContentPadding()
                 }
                 .clearScrollBackground()
             }

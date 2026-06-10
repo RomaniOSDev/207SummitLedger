@@ -54,7 +54,6 @@ struct CustomTabBar: View {
                         )
                         .frame(height: 1)
                 }
-                .ignoresSafeArea(edges: .bottom)
         }
         .compositingGroup()
         .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: -4)

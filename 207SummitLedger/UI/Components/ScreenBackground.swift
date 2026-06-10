@@ -1,6 +1,28 @@
 import SwiftUI
 import UIKit
 
+enum MainTabLayout {
+    /// Extra scroll padding above the custom tab bar on nested screens.
+    static let scrollBottomInset: CGFloat = 16
+}
+
+private struct TabBarScrollPaddingKey: EnvironmentKey {
+    static let defaultValue: CGFloat = MainTabLayout.scrollBottomInset
+}
+
+extension EnvironmentValues {
+    var tabBarScrollPadding: CGFloat {
+        get { self[TabBarScrollPaddingKey.self] }
+        set { self[TabBarScrollPaddingKey.self] = newValue }
+    }
+}
+
+extension View {
+    func tabBarScrollContentPadding() -> some View {
+        padding(.bottom, MainTabLayout.scrollBottomInset)
+    }
+}
+
 enum AppAppearance {
     static func configure() {
         let navigation = UINavigationBarAppearance()

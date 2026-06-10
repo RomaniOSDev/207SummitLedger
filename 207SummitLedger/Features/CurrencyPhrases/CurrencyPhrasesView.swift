@@ -21,14 +21,10 @@ struct CurrencyPhrasesView: View {
                     currencySection
                     conversionHistorySection
                     phrasesSection
-                    PrimaryButton(title: "Update Rates") {
-                        store.refreshRates()
-                        FeedbackManager.success()
-                        showSuccessFeedback()
-                    }
                 }
                 .padding(.horizontal, TravelCardStyle.horizontalPadding)
                 .padding(.vertical, 12)
+                .tabBarScrollContentPadding()
             }
             .clearScrollBackground()
         }
@@ -73,6 +69,12 @@ struct CurrencyPhrasesView: View {
                 PrimaryButton(title: "Convert") {
                     viewModel.performConversion(store: store)
                     if viewModel.convertedResult != nil { showSuccessFeedback() }
+                }
+
+                PrimaryButton(title: "Update Rates") {
+                    store.refreshRates()
+                    FeedbackManager.success()
+                    showSuccessFeedback()
                 }
             }
         }

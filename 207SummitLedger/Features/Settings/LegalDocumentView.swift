@@ -1,7 +1,8 @@
 import SwiftUI
 
-struct PrivacyPolicyView: View {
+struct LegalDocumentView: View {
     @Environment(\.dismiss) private var dismiss
+    let document: AppLegalDocument
     @State private var markdown = ""
 
     var body: some View {
@@ -32,7 +33,7 @@ struct PrivacyPolicyView: View {
                 }
                 .clearScrollBackground()
             }
-            .navigationTitle("Privacy Policy")
+            .navigationTitle(document.title)
             .toolbarBackground(.hidden, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -45,17 +46,15 @@ struct PrivacyPolicyView: View {
                     .frame(minWidth: 44, minHeight: 44)
                 }
             }
-            .onAppear {
-                loadPolicy()
-            }
+            .onAppear(perform: loadDocument)
         }
         .preferredColorScheme(.dark)
     }
 
-    private func loadPolicy() {
-        guard let url = Bundle.main.url(forResource: "privacy_policy", withExtension: "md"),
+    private func loadDocument() {
+        guard let url = Bundle.main.url(forResource: document.markdownResourceName, withExtension: "md"),
               let text = try? String(contentsOf: url, encoding: .utf8) else {
-            markdown = "# Privacy Policy\n\nContent unavailable."
+            markdown = "# \(document.title)\n\nContent unavailable."
             return
         }
         markdown = text

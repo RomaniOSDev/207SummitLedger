@@ -4,6 +4,7 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject private var store: AppDataStore
     @State private var showResetAlert = false
+    @State private var presentedLegalDocument: AppLegalDocument?
 
     private var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
@@ -30,19 +31,19 @@ struct SettingsView: View {
                             }
                             divider
                             SettingsCell(
-                                title: AppExternalLink.privacyPolicy.settingsTitle,
-                                icon: AppExternalLink.privacyPolicy.settingsIcon
+                                title: AppLegalDocument.privacyPolicy.title,
+                                icon: AppLegalDocument.privacyPolicy.settingsIcon
                             ) {
                                 FeedbackManager.tapLight()
-                                AppLinkService.openPrivacyPolicy()
+                                presentedLegalDocument = .privacyPolicy
                             }
                             divider
                             SettingsCell(
-                                title: AppExternalLink.termsOfUse.settingsTitle,
-                                icon: AppExternalLink.termsOfUse.settingsIcon
+                                title: AppLegalDocument.termsOfUse.title,
+                                icon: AppLegalDocument.termsOfUse.settingsIcon
                             ) {
                                 FeedbackManager.tapLight()
-                                AppLinkService.openTermsOfUse()
+                                presentedLegalDocument = .termsOfUse
                             }
                         }
 
@@ -68,12 +69,16 @@ struct SettingsView: View {
                     }
                     .padding(.horizontal, TravelCardStyle.horizontalPadding)
                     .padding(.vertical, 12)
+                    .tabBarScrollContentPadding()
                 }
                 .clearScrollBackground()
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
+            .fullScreenCover(item: $presentedLegalDocument) { document in
+                LegalDocumentView(document: document)
+            }
             .alert("Reset All Data?", isPresented: $showResetAlert) {
                 Button("Cancel", role: .cancel) { FeedbackManager.tapLight() }
                 Button("Reset", role: .destructive) {

@@ -101,6 +101,7 @@ struct TravelInventoryView: View {
             }
             .padding(.horizontal, TravelCardStyle.horizontalPadding)
             .padding(.vertical, 12)
+            .tabBarScrollContentPadding()
             .padding(.bottom, 8)
         }
         .clearScrollBackground()
