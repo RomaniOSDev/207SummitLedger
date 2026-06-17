@@ -10,7 +10,7 @@ struct StatsSummaryCard: View {
             HStack {
                 Image(systemName: "chart.bar.fill")
                     .foregroundStyle(Color("AppPrimary"))
-                Text("Your Progress")
+                Text("Your Prep Log")
                     .font(.headline)
                     .foregroundStyle(Color("AppTextPrimary"))
             }

@@ -17,7 +17,7 @@ struct TripListView: View {
                 }
             }
         }
-        .navigationTitle("Trip Planner")
+        .navigationTitle("Expeditions")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -54,9 +54,9 @@ struct TripListView: View {
         ScrollView {
             EmptyStateView(
                 icon: "calendar.badge.plus",
-                title: "Plan your next adventure",
-                message: "Combine destinations, packing, itinerary, and budget in one trip.",
-                buttonTitle: "Create Trip",
+                title: "Plan your next expedition",
+                message: "Build a multi-day route, link a target peak, and track your climb budget.",
+                buttonTitle: "Create Expedition",
                 action: { viewModel.showAddTrip = true }
             )
         }
@@ -67,8 +67,8 @@ struct TripListView: View {
         ScrollView {
             LazyVStack(spacing: TravelCardStyle.rowSpacing) {
                 ScreenIntroHeader(
-                    title: "Your Trips",
-                    subtitle: "\(store.trips.count) planned — tap a card for details"
+                    title: "Your Expeditions",
+                    subtitle: "\(store.trips.count) logged — tap a card for route details"
                 )
                 ForEach(store.trips) { trip in
                     Button {

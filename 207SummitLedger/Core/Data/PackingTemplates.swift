@@ -9,39 +9,39 @@ struct PackingTemplate: Identifiable {
 enum PackingTemplates {
     static let all: [PackingTemplate] = [
         PackingTemplate(
-            id: "weekend",
-            title: "Weekend",
+            id: "day_hike",
+            title: "Day Hike",
             items: [
-                ("Toothbrush", "Toiletries"),
-                ("Phone charger", "Electronics"),
-                ("T-shirts (2)", "Clothing"),
-                ("Jeans", "Clothing"),
-                ("Sneakers", "Clothing"),
-                ("Wallet", "Electronics")
+                ("Trail runners / boots", "Footwear"),
+                ("Softshell jacket", "Layers"),
+                ("Water bottles (2L)", "Nutrition"),
+                ("Headlamp", "Safety"),
+                ("First aid kit", "Safety"),
+                ("Map & compass", "Navigation")
             ]
         ),
         PackingTemplate(
-            id: "beach",
-            title: "Beach",
+            id: "alpine_climb",
+            title: "Alpine Climb",
             items: [
-                ("Swimsuit", "Clothing"),
-                ("Sunscreen", "Toiletries"),
-                ("Sandals", "Clothing"),
-                ("Sunglasses", "Clothing"),
-                ("Beach towel", "Clothing"),
-                ("Hat", "Clothing")
+                ("Mountaineering boots", "Footwear"),
+                ("Crampons", "Safety"),
+                ("Ice axe", "Safety"),
+                ("Harness & helmet", "Safety"),
+                ("Insulated mid-layer", "Layers"),
+                ("GPS / altimeter watch", "Navigation")
             ]
         ),
         PackingTemplate(
-            id: "winter",
-            title: "Winter",
+            id: "expedition",
+            title: "Multi-day Expedition",
             items: [
-                ("Winter coat", "Clothing"),
-                ("Thermal layers", "Clothing"),
-                ("Gloves", "Clothing"),
-                ("Scarf", "Clothing"),
-                ("Boots", "Clothing"),
-                ("Lip balm", "Toiletries")
+                ("4-season tent", "Camp"),
+                ("Sleeping bag (-10°C)", "Camp"),
+                ("Stove & fuel", "Nutrition"),
+                ("Freeze-dried meals", "Nutrition"),
+                ("Down suit / parka", "Layers"),
+                ("Satellite messenger", "Safety")
             ]
         )
     ]

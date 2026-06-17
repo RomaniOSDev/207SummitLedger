@@ -19,26 +19,33 @@ struct DestinationDetailView: View {
             ScrollView {
                 VStack(spacing: TravelCardStyle.rowSpacing) {
                     heroCard
+                    if current.elevationMeters > 0 {
+                        detailRow(title: "Elevation", value: current.elevationDisplay, icon: "arrow.up")
+                    }
+                    if !current.mountainRange.isEmpty {
+                        detailRow(title: "Range", value: current.mountainRange, icon: "mountain.2")
+                    }
+                    detailRow(title: "Difficulty", value: current.difficulty.title, icon: current.difficulty.icon)
                     if let date = current.plannedDate {
-                        detailRow(title: "Planned", value: date.formatted(date: .long, time: .omitted), icon: "calendar")
+                        detailRow(title: "Target ascent", value: date.formatted(date: .long, time: .omitted), icon: "calendar")
                     }
                     if !current.note.isEmpty {
-                        detailRow(title: "Notes", value: current.note, icon: "note.text")
+                        detailRow(title: "Route notes", value: current.note, icon: "note.text")
                     }
                     VStack(spacing: 10) {
                         if !current.visited {
-                            PrimaryButton(title: "Mark as Visited") {
+                            PrimaryButton(title: "Mark as Summited") {
                                 FeedbackManager.saveMedium()
-                                store.markVisited(current)
+                                store.markSummited(current)
                                 showSuccessFeedback()
                             }
                         }
-                        PrimaryButton(title: "Edit Destination") { showEdit = true }
+                        PrimaryButton(title: "Edit Peak") { showEdit = true }
                         Button {
                             FeedbackManager.tapLight()
                             sharePayload = store.shareText(for: current)
                         } label: {
-                            Text("Share Destination")
+                            Text("Share Summit Card")
                                 .font(.headline)
                                 .foregroundStyle(Color("AppPrimary"))
                                 .frame(maxWidth: .infinity)
@@ -53,7 +60,7 @@ struct DestinationDetailView: View {
             }
             .clearScrollBackground()
         }
-        .navigationTitle("Details")
+        .navigationTitle("Peak Details")
         .toolbarBackground(.hidden, for: .navigationBar)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: Binding(
@@ -82,7 +89,7 @@ struct DestinationDetailView: View {
                 Text(current.country)
                     .foregroundStyle(Color("AppTextSecondary"))
                 if current.visited {
-                    StatusPill(text: "Visited", style: .active)
+                    StatusPill(text: "Summited", style: .active)
                 }
             }
             Spacer(minLength: 0)

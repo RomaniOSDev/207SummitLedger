@@ -13,8 +13,6 @@ struct TripFormView: View {
     @State private var endDate = Date().addingTimeInterval(86400 * 3)
     @State private var status: TripStatus = .planned
     @State private var selectedDestinationId: UUID?
-    @State private var fromCurrency = ""
-    @State private var toCurrency = ""
     @State private var note = ""
 
     var body: some View {
@@ -23,9 +21,9 @@ struct TripFormView: View {
                 AppBackgroundView()
                 ScrollView {
                     VStack(spacing: TravelCardStyle.rowSpacing) {
-                        FormFieldCard(title: "Trip details") {
+                        FormFieldCard(title: "Expedition") {
                             VStack(spacing: 12) {
-                                TextField("Trip title", text: $title)
+                                TextField("Expedition name", text: $title)
                                     .foregroundStyle(Color("AppTextPrimary"))
                                     .travelInputField()
                                 DatePicker("Start", selection: $startDate, displayedComponents: .date)
@@ -40,8 +38,8 @@ struct TripFormView: View {
                                 .foregroundStyle(Color("AppTextPrimary"))
                             }
                         }
-                        FormFieldCard(title: "Destination") {
-                            Picker("Link destination", selection: $selectedDestinationId) {
+                        FormFieldCard(title: "Target peak") {
+                            Picker("Link peak", selection: $selectedDestinationId) {
                                 Text("None").tag(Optional<UUID>.none)
                                 ForEach(store.destinations) { dest in
                                     Text("\(dest.flagEmoji) \(dest.name)").tag(Optional(dest.id))
@@ -49,13 +47,7 @@ struct TripFormView: View {
                             }
                             .foregroundStyle(Color("AppTextPrimary"))
                         }
-                        FormFieldCard(title: "Currency") {
-                            VStack(spacing: 12) {
-                                currencyPicker("From", selection: $fromCurrency)
-                                currencyPicker("To", selection: $toCurrency)
-                            }
-                        }
-                        FormFieldCard(title: "Notes") {
+                        FormFieldCard(title: "Expedition notes") {
                             TextField("Notes", text: $note, axis: .vertical)
                                 .lineLimit(2...4)
                                 .foregroundStyle(Color("AppTextPrimary"))
@@ -67,7 +59,7 @@ struct TripFormView: View {
                 }
                 .clearScrollBackground()
             }
-            .navigationTitle(trip == nil ? "New Trip" : "Edit Trip")
+            .navigationTitle(trip == nil ? "New Expedition" : "Edit Expedition")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
@@ -84,29 +76,14 @@ struct TripFormView: View {
         }
     }
 
-    private func currencyPicker(_ label: String, selection: Binding<String>) -> some View {
-        Picker(label, selection: selection) {
-            Text("Select").tag("")
-            ForEach(CurrencyData.currencies) { c in
-                Text(c.code).tag(c.code)
-            }
-        }
-    }
-
     private func load() {
-        if let trip {
-            title = trip.title
-            startDate = trip.startDate
-            endDate = trip.endDate
-            status = trip.status
-            selectedDestinationId = trip.destinationId
-            fromCurrency = trip.fromCurrency
-            toCurrency = trip.toCurrency
-            note = trip.note
-        } else {
-            fromCurrency = store.fromCurrency
-            toCurrency = store.toCurrency
-        }
+        guard let trip else { return }
+        title = trip.title
+        startDate = trip.startDate
+        endDate = trip.endDate
+        status = trip.status
+        selectedDestinationId = trip.destinationId
+        note = trip.note
     }
 
     private func save() {
@@ -126,8 +103,8 @@ struct TripFormView: View {
             status: status,
             itinerary: trip?.itinerary ?? [],
             budget: trip?.budget,
-            fromCurrency: fromCurrency,
-            toCurrency: toCurrency,
+            fromCurrency: trip?.fromCurrency ?? "",
+            toCurrency: trip?.toCurrency ?? "",
             note: note.trimmingCharacters(in: .whitespacesAndNewlines)
         )
         onSave(item)

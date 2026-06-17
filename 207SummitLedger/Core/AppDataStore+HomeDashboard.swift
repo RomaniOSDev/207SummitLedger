@@ -4,10 +4,10 @@ extension AppDataStore {
     var homeGreeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
-        case 5..<12: return "Good morning"
-        case 12..<17: return "Good afternoon"
-        case 17..<22: return "Good evening"
-        default: return "Good night"
+        case 5..<12: return "Good morning, alpinist"
+        case 12..<17: return "Good afternoon, alpinist"
+        case 17..<22: return "Good evening, alpinist"
+        default: return "Rest well, alpinist"
         }
     }
 
@@ -30,12 +30,8 @@ extension AppDataStore {
         return cal.dateComponents([.day], from: today, to: start).day
     }
 
-    var wishlistDestinations: [Destination] {
-        destinations.filter { !$0.visited }.prefix(8).map { $0 }
-    }
-
-    var visitedDestinationsCount: Int {
-        destinations.filter(\.visited).count
+    var bucketListPeaksForHome: [Destination] {
+        bucketListPeaks.prefix(8).map { $0 }
     }
 
     var packingProgress: (done: Int, total: Int) {
@@ -56,9 +52,5 @@ extension AppDataStore {
 
     var totalAchievementCount: Int {
         AchievementDefinition.all.count + SeasonalAchievement.all.count
-    }
-
-    var recentConversion: ConversionRecord? {
-        conversionHistory.first
     }
 }

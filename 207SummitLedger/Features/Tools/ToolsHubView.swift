@@ -8,14 +8,14 @@ struct ToolsHubView: View {
                 ScrollView {
                     VStack(spacing: TravelCardStyle.rowSpacing) {
                         ScreenIntroHeader(
-                            title: "Travel Tools",
-                            subtitle: "Everything you need to prepare and explore offline"
+                            title: "Expedition Prep",
+                            subtitle: "Plan routes, pack alpine gear, and clear permits"
                         )
 
                         NavigationLink { TripListView() } label: {
                             ToolNavigationCell(
-                                title: "Trip Planner",
-                                subtitle: "Itinerary, budget, and trip status",
+                                title: "Expedition Planner",
+                                subtitle: "Multi-day routes, budget, and status",
                                 icon: "calendar",
                                 accent: true
                             )
@@ -23,25 +23,25 @@ struct ToolsHubView: View {
 
                         NavigationLink { DocumentChecklistView() } label: {
                             ToolNavigationCell(
-                                title: "Travel Documents",
-                                subtitle: "Passport, visa, insurance, tickets",
-                                icon: "doc.text.fill"
+                                title: "Safety & Permits",
+                                subtitle: "Park permits, insurance, and rescue plan",
+                                icon: "shield.checkered"
                             )
                         }
 
                         NavigationLink { TravelInventoryView() } label: {
                             ToolNavigationCell(
-                                title: "Travel Inventory",
-                                subtitle: "Packing lists with smart templates",
-                                icon: "suitcase.fill"
+                                title: "Alpine Gear",
+                                subtitle: "Layered packing lists with climb templates",
+                                icon: "backpack.fill"
                             )
                         }
 
-                        NavigationLink { CurrencyPhrasesView() } label: {
+                        NavigationLink { ElevationStatsView() } label: {
                             ToolNavigationCell(
-                                title: "Currency & Phrases",
-                                subtitle: "Converter, history, and phrase guide",
-                                icon: "globe"
+                                title: "Elevation Profile",
+                                subtitle: "Altitude milestones and summit history",
+                                icon: "chart.line.uptrend.xyaxis"
                             )
                         }
                     }
@@ -51,7 +51,7 @@ struct ToolsHubView: View {
                 }
                 .clearScrollBackground()
             }
-            .navigationTitle("Tools")
+            .navigationTitle("Prep")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
         }

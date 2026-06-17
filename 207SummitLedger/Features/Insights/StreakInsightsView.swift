@@ -14,11 +14,11 @@ struct StreakInsightsView: View {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                             insightTile("Sessions", value: "\(store.totalSessionsCompleted)", icon: "bolt.fill")
                             insightTile("Minutes", value: "\(store.totalMinutesUsed)", icon: "clock.fill")
-                            insightTile("Trips", value: "\(store.trips.count)", icon: "calendar")
-                            insightTile("Completed", value: "\(store.tripsCompleted)", icon: "checkmark.seal")
+                            insightTile("Expeditions", value: "\(store.trips.count)", icon: "calendar")
+                            insightTile("Completed", value: "\(store.tripsCompleted)", icon: "flag.fill")
                         }
                     }
-                    Text("Every small step — adding a destination, packing an item, or converting currency — keeps your travel plans on track.")
+                    Text("Every log entry — a new peak, packed gear item, or cleared permit — keeps your next ascent on track.")
                         .font(.subheadline)
                         .foregroundStyle(Color("AppTextSecondary"))
                         .multilineTextAlignment(.center)
@@ -30,7 +30,7 @@ struct StreakInsightsView: View {
             }
             .clearScrollBackground()
         }
-        .navigationTitle("Streak Insights")
+        .navigationTitle("Prep Insights")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
     }
@@ -51,10 +51,10 @@ struct StreakInsightsView: View {
     }
 
     private var streakMessage: String {
-        if store.streakDays >= 7 { return "You planned \(store.streakDays) days in a row!" }
-        if store.streakDays >= 2 { return "You are on a \(store.streakDays)-day streak." }
-        if store.streakDays == 1 { return "Great start — keep planning tomorrow." }
-        return "Complete an action today to start a streak."
+        if store.streakDays >= 7 { return "You prepared \(store.streakDays) days in a row!" }
+        if store.streakDays >= 2 { return "You are on a \(store.streakDays)-day prep streak." }
+        if store.streakDays == 1 { return "Great start — log another entry tomorrow." }
+        return "Log a peak or pack gear today to start a streak."
     }
 
     private func insightTile(_ label: String, value: String, icon: String) -> some View {

@@ -50,16 +50,16 @@ struct HomeHeroBanner: View {
 // MARK: - Stat strip
 
 struct HomeStatStrip: View {
-    let destinations: Int
-    let visited: Int
-    let trips: Int
+    let peaks: Int
+    let summited: Int
+    let highest: Int
     let badges: Int
 
     var body: some View {
         HStack(spacing: 8) {
-            miniStat(value: "\(destinations)", label: "Places", icon: "mappin.circle.fill")
-            miniStat(value: "\(visited)", label: "Visited", icon: "checkmark.seal.fill")
-            miniStat(value: "\(trips)", label: "Trips", icon: "airplane")
+            miniStat(value: "\(peaks)", label: "Peaks", icon: "mountain.2")
+            miniStat(value: "\(summited)", label: "Summited", icon: "flag.fill")
+            miniStat(value: highest > 0 ? "\(highest)" : "—", label: "Highest m", icon: "arrow.up")
             miniStat(value: "\(badges)", label: "Badges", icon: "star.fill")
         }
     }
@@ -96,7 +96,7 @@ struct HomeNextTripCard: View {
         HStack(spacing: 14) {
             IconCircleBadge(systemImage: "calendar.badge.clock", size: 52, iconSize: 22)
             VStack(alignment: .leading, spacing: 6) {
-                Text("Next trip")
+                Text("Next expedition")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(Color("AppTextSecondary"))
                     .textCase(.uppercase)
@@ -236,7 +236,11 @@ struct HomeDestinationChip: View {
                 .font(.caption.bold())
                 .foregroundStyle(Color("AppTextPrimary"))
                 .lineLimit(1)
-            if let date = destination.plannedDate {
+            if destination.elevationMeters > 0 {
+                Text(destination.elevationDisplay)
+                    .font(.caption2)
+                    .foregroundStyle(Color("AppPrimary"))
+            } else if let date = destination.plannedDate {
                 Text(date.formatted(date: .abbreviated, time: .omitted))
                     .font(.caption2)
                     .foregroundStyle(Color("AppTextSecondary"))

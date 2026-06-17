@@ -27,10 +27,10 @@ struct AchievementsView: View {
                             HStack(spacing: 14) {
                                 IconCircleBadge(systemImage: "flame.fill", size: 48, iconSize: 20)
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text("Streak Insights")
+                                    Text("Prep Insights")
                                         .font(.headline)
                                         .foregroundStyle(Color("AppTextPrimary"))
-                                    Text("See your planning momentum")
+                                    Text("See your preparation momentum")
                                         .font(.caption)
                                         .foregroundStyle(Color("AppTextSecondary"))
                                 }
@@ -44,7 +44,7 @@ struct AchievementsView: View {
                             .travelCard(elevated: true)
                         }
 
-                        SectionHeaderView(title: "Core Badges", subtitle: "Unlock by exploring the app")
+                        SectionHeaderView(title: "Core Badges", subtitle: "Unlock by climbing and preparing")
                         LazyVGrid(columns: columns, spacing: 12) {
                             ForEach(AchievementDefinition.all) { achievement in
                                 AchievementCell(
@@ -56,7 +56,7 @@ struct AchievementsView: View {
                             }
                         }
 
-                        SectionHeaderView(title: "Seasonal Badges", subtitle: "Extra milestones for planners")
+                        SectionHeaderView(title: "Alpine Badges", subtitle: "Milestones for dedicated alpinists")
                         LazyVGrid(columns: columns, spacing: 12) {
                             ForEach(SeasonalAchievement.all) { achievement in
                                 AchievementCell(
@@ -74,7 +74,7 @@ struct AchievementsView: View {
                 }
                 .clearScrollBackground()
             }
-            .navigationTitle("Achievements")
+            .navigationTitle("Summit Badges")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
         }
@@ -83,10 +83,10 @@ struct AchievementsView: View {
     private var metricsCard: some View {
         FormFieldCard(title: "Summary") {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-                metricTile("Destinations", value: store.destinationsAdded, icon: "mappin.and.ellipse")
-                metricTile("Trips", value: store.tripsCompleted, icon: "airplane")
-                metricTile("Checklists", value: store.checklistsCompleted, icon: "checkmark.circle")
-                metricTile("Conversions", value: store.conversionsRun, icon: "dollarsign.circle")
+                metricTile("Peaks logged", value: store.destinationsAdded, icon: "mountain.2")
+                metricTile("Expeditions", value: store.tripsCompleted, icon: "flag.fill")
+                metricTile("Gear lists", value: store.checklistsCompleted, icon: "backpack.fill")
+                metricTile("Highest m", value: store.highestSummitedElevation, icon: "arrow.up")
             }
         }
     }

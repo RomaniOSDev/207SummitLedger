@@ -22,7 +22,7 @@ struct DocumentChecklistView: View {
                 }
             }
         }
-        .navigationTitle("Travel Documents")
+        .navigationTitle("Safety & Permits")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar {
@@ -35,7 +35,7 @@ struct DocumentChecklistView: View {
                 .foregroundStyle(Color("AppPrimary"))
             }
         }
-        .confirmationDialog("Document Templates", isPresented: $showTemplates, titleVisibility: .visible) {
+        .confirmationDialog("Permit Templates", isPresented: $showTemplates, titleVisibility: .visible) {
             ForEach(DocumentTemplates.all) { template in
                 Button(template.title) {
                     store.applyDocumentTemplate(template)
@@ -50,9 +50,9 @@ struct DocumentChecklistView: View {
     private var emptyState: some View {
         ScrollView {
             EmptyStateView(
-                icon: "doc.text.fill",
-                title: "Documents ready?",
-                message: "Track passport, visa, tickets, and insurance. Pick a template to start fast.",
+                icon: "shield.checkered",
+                title: "Safety checklist",
+                message: "Track permits, insurance, weather briefings, and rescue plans. Pick an alpine template to start.",
                 buttonTitle: "Use Template",
                 action: { showTemplates = true }
             )

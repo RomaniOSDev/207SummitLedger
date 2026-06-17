@@ -34,6 +34,7 @@ final class AppDataStore: ObservableObject {
         static let packingTemplatesUsed = "packingTemplatesUsed"
         static let documentsChecklistsCompleted = "documentsChecklistsCompleted"
         static let documentsCompletionCounted = "documentsCompletionCounted"
+        static let catalogPeaksAdded = "catalogPeaksAdded"
     }
 
     private let defaults: UserDefaults
@@ -175,6 +176,10 @@ final class AppDataStore: ObservableObject {
         didSet { defaults.set(documentsChecklistsCompleted, forKey: Keys.documentsChecklistsCompleted) }
     }
 
+    @Published var catalogPeaksAdded: Int {
+        didSet { defaults.set(catalogPeaksAdded, forKey: Keys.catalogPeaksAdded) }
+    }
+
     private var inventoryWasFullyComplete = false
     private var documentsWereFullyComplete = false
 
@@ -191,7 +196,7 @@ final class AppDataStore: ObservableObject {
         destinationsAdded = defaults.integer(forKey: Keys.destinationsAdded)
         tripsCompleted = defaults.integer(forKey: Keys.tripsCompleted)
         travelItems = Self.loadTravelItems(defaults: defaults)
-        categories = defaults.stringArray(forKey: Keys.categories) ?? ["Clothing", "Toiletries", "Electronics"]
+        categories = defaults.stringArray(forKey: Keys.categories) ?? ["Layers", "Safety", "Navigation", "Nutrition", "Camp"]
         lastEditedAt = defaults.object(forKey: Keys.lastEditedAt) as? Date
         checklistsCompleted = defaults.integer(forKey: Keys.checklistsCompleted)
         fromCurrency = defaults.string(forKey: Keys.fromCurrency) ?? ""
@@ -213,6 +218,7 @@ final class AppDataStore: ObservableObject {
         winterTripsPlanned = defaults.integer(forKey: Keys.winterTripsPlanned)
         packingTemplatesUsed = defaults.integer(forKey: Keys.packingTemplatesUsed)
         documentsChecklistsCompleted = defaults.integer(forKey: Keys.documentsChecklistsCompleted)
+        catalogPeaksAdded = defaults.integer(forKey: Keys.catalogPeaksAdded)
         documentsWereFullyComplete = defaults.bool(forKey: Keys.documentsCompletionCounted)
 
         NotificationCenter.default.addObserver(
@@ -286,9 +292,18 @@ final class AppDataStore: ObservableObject {
     }
 
     func shareText(for destination: Destination) -> String {
-        var lines = ["\(destination.flagEmoji) \(destination.name)", destination.country]
-        if let date = destination.plannedDate {
-            lines.append("Planned: \(date.formatted(date: .long, time: .omitted))")
+        var lines = ["\(destination.flagEmoji) \(destination.name) — Summit Ledger"]
+        if destination.elevationMeters > 0 {
+            lines.append("Elevation: \(destination.elevationMeters.formatted()) m")
+        }
+        if !destination.mountainRange.isEmpty {
+            lines.append("Range: \(destination.mountainRange)")
+        }
+        lines.append("\(destination.country) · \(destination.difficulty.title)")
+        if destination.visited {
+            lines.append("Status: Summited")
+        } else if let date = destination.plannedDate {
+            lines.append("Target date: \(date.formatted(date: .long, time: .omitted))")
         }
         if !destination.note.isEmpty {
             lines.append("Notes: \(destination.note)")
@@ -491,10 +506,10 @@ final class AppDataStore: ObservableObject {
             .sorted { $0.1 < $1.1 }
         guard let first = upcoming.first else { return nil }
         if first.1 == 0 {
-            return "Your trip \"\(first.0.title)\" starts today!"
+            return "Your expedition \"\(first.0.title)\" starts today!"
         }
         let dayWord = first.1 == 1 ? "day" : "days"
-        return "Trip \"\(first.0.title)\" in \(first.1) \(dayWord)"
+        return "Expedition \"\(first.0.title)\" in \(first.1) \(dayWord)"
     }
 
     func enqueueAchievementBanner(_ title: String) {
@@ -543,7 +558,7 @@ final class AppDataStore: ObservableObject {
         destinationsAdded = defaults.integer(forKey: Keys.destinationsAdded)
         tripsCompleted = defaults.integer(forKey: Keys.tripsCompleted)
         travelItems = Self.loadTravelItems(defaults: defaults)
-        categories = defaults.stringArray(forKey: Keys.categories) ?? ["Clothing", "Toiletries", "Electronics"]
+        categories = defaults.stringArray(forKey: Keys.categories) ?? ["Layers", "Safety", "Navigation", "Nutrition", "Camp"]
         lastEditedAt = defaults.object(forKey: Keys.lastEditedAt) as? Date
         checklistsCompleted = defaults.integer(forKey: Keys.checklistsCompleted)
         fromCurrency = defaults.string(forKey: Keys.fromCurrency) ?? ""
@@ -563,6 +578,7 @@ final class AppDataStore: ObservableObject {
         winterTripsPlanned = defaults.integer(forKey: Keys.winterTripsPlanned)
         packingTemplatesUsed = defaults.integer(forKey: Keys.packingTemplatesUsed)
         documentsChecklistsCompleted = defaults.integer(forKey: Keys.documentsChecklistsCompleted)
+        catalogPeaksAdded = defaults.integer(forKey: Keys.catalogPeaksAdded)
         documentsWereFullyComplete = defaults.bool(forKey: Keys.documentsCompletionCounted)
         pendingAchievementTitle = nil
         achievementBannerQueue = []

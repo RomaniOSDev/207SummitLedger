@@ -2,28 +2,24 @@
 
 Last updated: June 2026
 
-By downloading or using this app, you agree to these Terms of Use.
+By using Summit Ledger, you agree to these Terms of Use.
 
-## Use of the App
+## Purpose
 
-This app is provided for personal travel planning. You may use it to manage destinations, trips, packing lists, documents checklists, currency conversion, and travel phrases offline on your device.
+Summit Ledger is an offline journal for mountaineers and hikers. You may log peaks, plan expeditions, manage alpine gear checklists, and track safety permits on your device.
 
-## Your Content
+## Your responsibility
 
-All information you enter is stored locally on your device. You are responsible for the accuracy of your travel plans and any decisions you make based on the app.
+All summit logs and expedition plans are your responsibility. Elevation data in the peak catalog is for reference only. Always verify routes, weather, permits, and safety requirements with official sources and qualified guides before climbing.
 
-## No Warranty
+## No warranty
 
-The app is provided "as is" without warranties of any kind. Currency rates are approximate and for reference only. Always verify exchange rates and travel requirements with official sources before traveling.
+The app is provided "as is" without warranties. Budget estimates and catalog elevations are approximate.
 
-## Limitation of Liability
+## Limitation of liability
 
-To the fullest extent permitted by law, the developer is not liable for any loss or inconvenience arising from use of the app, including missed trips, incorrect packing, or reliance on currency conversions or phrase translations.
-
-## Changes
-
-We may update these terms. Continued use of the app after changes constitutes acceptance of the updated terms.
+The developer is not liable for injury, loss, or failed ascents arising from use of this app or reliance on its content.
 
 ## Contact
 
-For questions about these terms, visit the support page listed on the App Store.
+For questions, use the App Store support page.

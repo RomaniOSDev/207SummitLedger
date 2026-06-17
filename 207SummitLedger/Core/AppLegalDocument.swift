@@ -33,13 +33,13 @@ enum AppLegalDocument: String, Identifiable, CaseIterable {
         }
     }
 
-    /// Optional web URL — kept in enum for reference; in-app markdown is shown to users.
+    /// Reference only — legal text is shown in-app from bundled markdown.
     var webURLString: String {
         switch self {
         case .privacyPolicy:
-            return "https://summit207ledger.site/privacy/241"
+            return "https://summitledger.app/privacy"
         case .termsOfUse:
-            return "https://summit207ledger.site/terms/241"
+            return "https://summitledger.app/terms"
         }
     }
 

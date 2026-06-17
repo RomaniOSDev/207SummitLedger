@@ -21,7 +21,7 @@ struct TravelInventoryView: View {
                 }
             }
         }
-        .navigationTitle("Travel Inventory")
+        .navigationTitle("Alpine Gear")
         .searchable(text: $viewModel.searchText, prompt: "Search items")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -33,7 +33,7 @@ struct TravelInventoryView: View {
                 .foregroundStyle(Color("AppPrimary"))
             }
         }
-        .confirmationDialog("Packing Templates", isPresented: $viewModel.showTemplates, titleVisibility: .visible) {
+        .confirmationDialog("Gear Templates", isPresented: $viewModel.showTemplates, titleVisibility: .visible) {
             ForEach(PackingTemplates.all) { template in
                 Button(template.title) {
                     store.applyPackingTemplate(template)
@@ -57,9 +57,9 @@ struct TravelInventoryView: View {
     private var emptyState: some View {
         ScrollView {
             EmptyStateView(
-                icon: "suitcase.fill",
-                title: "Start your inventory",
-                message: "Add what you need to bring or apply a Weekend, Beach, or Winter template.",
+                icon: "backpack.fill",
+                title: "Pack your alpine kit",
+                message: "Add layers, safety gear, and camp equipment — or apply a Day Hike, Alpine Climb, or Expedition template.",
                 buttonTitle: "Add Item",
                 action: { viewModel.showAddSheet = true }
             )

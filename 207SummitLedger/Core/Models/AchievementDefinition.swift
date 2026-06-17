@@ -8,73 +8,73 @@ struct AchievementDefinition: Identifiable {
 
     static let all: [AchievementDefinition] = [
         AchievementDefinition(
-            id: "first_step",
-            title: "First Step",
-            description: "Added your first destination.",
-            systemImage: "airplane.departure"
+            id: "first_summit",
+            title: "First Summit",
+            description: "Logged your first peak in the summit ledger.",
+            systemImage: "flag.fill"
         ),
         AchievementDefinition(
-            id: "dream_big",
-            title: "Dream Big",
-            description: "Added ten destinations to your wishlist.",
+            id: "high_altitude",
+            title: "High Altitude",
+            description: "Summited a peak at 4,000 m or higher.",
+            systemImage: "mountain.2.fill"
+        ),
+        AchievementDefinition(
+            id: "seven_summits_starter",
+            title: "Seven Summits Starter",
+            description: "Logged five different peaks.",
             systemImage: "star.fill"
         ),
         AchievementDefinition(
-            id: "travel_master",
-            title: "Travel Master",
-            description: "Completed five trips successfully.",
+            id: "expedition_leader",
+            title: "Expedition Leader",
+            description: "Completed three expeditions.",
             systemImage: "map.fill"
         ),
         AchievementDefinition(
-            id: "packing_pro",
-            title: "Packing Pro",
-            description: "Completed ten packing checklists.",
-            systemImage: "suitcase.fill"
+            id: "gear_ready",
+            title: "Gear Ready",
+            description: "Completed ten alpine gear checklists.",
+            systemImage: "backpack.fill"
         ),
         AchievementDefinition(
-            id: "language_learner",
-            title: "Language Learner",
-            description: "Viewed five different phrases in reference tool.",
-            systemImage: "text.bubble.fill"
+            id: "safety_first",
+            title: "Safety First",
+            description: "Finished a full safety & permits checklist.",
+            systemImage: "shield.checkered"
         ),
         AchievementDefinition(
-            id: "currency_converter",
-            title: "Currency Converter",
-            description: "Ran currency conversion twenty times.",
-            systemImage: "dollarsign.circle.fill"
+            id: "ridge_walker",
+            title: "Ridge Walker",
+            description: "Logged fifteen peaks in your ledger.",
+            systemImage: "figure.hiking"
         ),
         AchievementDefinition(
-            id: "explorer",
-            title: "Explorer",
-            description: "Added twenty destinations to your wishlist.",
-            systemImage: "globe.americas.fill"
-        ),
-        AchievementDefinition(
-            id: "global_adventurer",
-            title: "Global Adventurer",
-            description: "Completed twenty-five trips around the world.",
-            systemImage: "flag.fill"
+            id: "summit_master",
+            title: "Summit Master",
+            description: "Completed ten expeditions.",
+            systemImage: "trophy.fill"
         )
     ]
 
     func isUnlocked(store: AppDataStore) -> Bool {
         switch id {
-        case "first_step":
-            return store.destinationsAdded >= 1
-        case "dream_big":
-            return store.destinationsAdded >= 10
-        case "travel_master":
-            return store.tripsCompleted >= 5
-        case "packing_pro":
+        case "first_summit":
+            return store.summitedPeaks.count >= 1
+        case "high_altitude":
+            return store.highestSummitedElevation >= 4000
+        case "seven_summits_starter":
+            return store.destinationsAdded >= 5
+        case "expedition_leader":
+            return store.tripsCompleted >= 3
+        case "gear_ready":
             return store.checklistsCompleted >= 10
-        case "language_learner":
-            return store.phrasesViewed >= 5
-        case "currency_converter":
-            return store.conversionsRun >= 20
-        case "explorer":
-            return store.destinationsAdded >= 20
-        case "global_adventurer":
-            return store.tripsCompleted >= 25
+        case "safety_first":
+            return store.documentsChecklistsCompleted >= 1
+        case "ridge_walker":
+            return store.destinationsAdded >= 15
+        case "summit_master":
+            return store.tripsCompleted >= 10
         default:
             return false
         }

@@ -5,6 +5,7 @@ struct TravelVaultView: View {
     @EnvironmentObject private var store: AppDataStore
     @Environment(\.showSuccessFeedback) private var showSuccessFeedback
     @StateObject private var viewModel = TravelVaultViewModel()
+    @State private var showCatalog = false
 
     private var filtered: [Destination] {
         viewModel.filteredDestinations(from: store)
@@ -22,9 +23,9 @@ struct TravelVaultView: View {
                     }
                 }
             }
-            .navigationTitle("Travel Vault")
+            .navigationTitle("Summit Log")
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $viewModel.searchText, prompt: "Search destinations")
+            .searchable(text: $viewModel.searchText, prompt: "Search peaks")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Menu {
@@ -40,14 +41,24 @@ struct TravelVaultView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        FeedbackManager.tapLight()
-                        viewModel.editingDestination = nil
-                        viewModel.showAddSheet = true
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.title2)
-                            .foregroundStyle(Color("AppPrimary"))
+                    HStack(spacing: 12) {
+                        Button {
+                            FeedbackManager.tapLight()
+                            showCatalog = true
+                        } label: {
+                            Image(systemName: "book.fill")
+                                .font(.title3)
+                                .foregroundStyle(Color("AppAccent"))
+                        }
+                        Button {
+                            FeedbackManager.tapLight()
+                            viewModel.editingDestination = nil
+                            viewModel.showAddSheet = true
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.title2)
+                                .foregroundStyle(Color("AppPrimary"))
+                        }
                     }
                 }
             }
@@ -65,6 +76,9 @@ struct TravelVaultView: View {
                     }
                     viewModel.showAddSheet = false
                 }
+            }
+            .sheet(isPresented: $showCatalog) {
+                PeakCatalogView()
             }
             .sheet(isPresented: Binding(
                 get: { viewModel.sharePayload != nil },
@@ -84,11 +98,11 @@ struct TravelVaultView: View {
     private var emptyState: some View {
         ScrollView {
             EmptyStateView(
-                icon: "airplane",
-                title: "Your future adventures await!",
-                message: "Save dream destinations, plan dates, and track where you have been.",
-                buttonTitle: "Add Destination",
-                action: { viewModel.showAddSheet = true }
+                icon: "mountain.2.fill",
+                title: "Your summit log is empty",
+                message: "Log peaks you have climbed or add targets from the world catalog.",
+                buttonTitle: "Browse Peak Catalog",
+                action: { showCatalog = true }
             )
         }
         .clearScrollBackground()
@@ -98,7 +112,7 @@ struct TravelVaultView: View {
         ScrollView {
             LazyVStack(spacing: TravelCardStyle.rowSpacing) {
                 if filtered.isEmpty {
-                    Text("No matches for your search.")
+                    Text("No peaks match your search.")
                         .font(.subheadline)
                         .foregroundStyle(Color("AppTextSecondary"))
                         .frame(maxWidth: .infinity)
@@ -120,10 +134,12 @@ struct TravelVaultView: View {
                             store.duplicateDestination(destination)
                             showSuccessFeedback()
                         }
-                        Button("Mark Visited") {
-                            FeedbackManager.saveMedium()
-                            store.markVisited(destination)
-                            showSuccessFeedback()
+                        if !destination.visited {
+                            Button("Mark Summited") {
+                                FeedbackManager.saveMedium()
+                                store.markSummited(destination)
+                                showSuccessFeedback()
+                            }
                         }
                         Button("Edit") {
                             viewModel.editingDestination = destination

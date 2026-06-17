@@ -17,25 +17,25 @@ struct OnboardingView: View {
 
     private let pages: [OnboardingPage] = [
         OnboardingPage(
-            stepLabel: "Discover",
-            headline: "Plan Your Journey",
-            description: "Organize destinations, trips, and daily travel goals in one calm workspace.",
+            stepLabel: "Log",
+            headline: "Your Summit Ledger",
+            description: "Record peaks you have summited and mountains on your bucket list with elevation and difficulty.",
             imageName: "HomeHero",
-            icon: "airplane.departure"
+            icon: "mountain.2.fill"
         ),
         OnboardingPage(
-            stepLabel: "Collect",
-            headline: "Build Your Vault",
-            description: "Save dream places, mark visits, and keep notes for every country on your list.",
+            stepLabel: "Catalog",
+            headline: "World Peak Catalog",
+            description: "Add famous summits from Everest to Fuji — then track your personal altitude milestones.",
             imageName: "HomeWidgetExplorer",
-            icon: "mappin.and.ellipse"
+            icon: "book.fill"
         ),
         OnboardingPage(
             stepLabel: "Prepare",
-            headline: "Travel Prepared",
-            description: "Packing lists, documents, currency tools, and phrases — ready before you go.",
+            headline: "Expedition Ready",
+            description: "Plan multi-day routes, pack alpine gear, and clear safety permits before every ascent.",
             imageName: "HomeWidgetPacking",
-            icon: "suitcase.fill"
+            icon: "backpack.fill"
         )
     ]
 

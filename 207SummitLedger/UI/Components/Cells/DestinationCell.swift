@@ -19,24 +19,32 @@ struct DestinationCell: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                     if destination.visited {
-                        Image(systemName: "checkmark.seal.fill")
+                        Image(systemName: "flag.fill")
                             .foregroundStyle(Color("AppPrimary"))
                             .font(.subheadline)
                     }
                 }
-                Text(destination.country)
-                    .font(.subheadline)
-                    .foregroundStyle(Color("AppTextSecondary"))
+                HStack(spacing: 6) {
+                    Text(destination.country)
+                    if !destination.mountainRange.isEmpty {
+                        Text("·")
+                        Text(destination.mountainRange)
+                    }
+                }
+                .font(.subheadline)
+                .foregroundStyle(Color("AppTextSecondary"))
+                .lineLimit(1)
                 HStack(spacing: 8) {
-                    if let date = destination.plannedDate {
+                    if destination.elevationMeters > 0 {
+                        Label(destination.elevationDisplay, systemImage: "arrow.up")
+                            .font(.caption.bold())
+                            .foregroundStyle(Color("AppPrimary"))
+                    }
+                    StatusPill(text: destination.difficulty.title, style: difficultyPill(destination.difficulty))
+                    if let date = destination.plannedDate, !destination.visited {
                         Label(date.formatted(date: .abbreviated, time: .omitted), systemImage: "calendar")
                             .font(.caption)
                             .foregroundStyle(Color("AppAccent"))
-                    }
-                    if !destination.note.isEmpty {
-                        Label("Note", systemImage: "note.text")
-                            .font(.caption)
-                            .foregroundStyle(Color("AppTextSecondary"))
                     }
                 }
             }
@@ -48,5 +56,14 @@ struct DestinationCell: View {
             }
         }
         .travelCard()
+    }
+
+    private func difficultyPill(_ d: SummitDifficulty) -> StatusPill.PillStyle {
+        switch d {
+        case .beginner: return .neutral
+        case .moderate: return .planned
+        case .hard: return .active
+        case .expert: return .completed
+        }
     }
 }

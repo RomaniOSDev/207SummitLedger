@@ -8,56 +8,56 @@ struct SeasonalAchievement: Identifiable {
 
     static let all: [SeasonalAchievement] = [
         SeasonalAchievement(
-            id: "winter_wanderer",
-            title: "Winter Wanderer",
-            description: "Planned a winter-season trip.",
+            id: "winter_alpinist",
+            title: "Winter Alpinist",
+            description: "Planned a winter-season expedition.",
             systemImage: "snowflake"
         ),
         SeasonalAchievement(
-            id: "phrase_explorer",
-            title: "Phrase Explorer",
-            description: "Expanded three phrase categories.",
-            systemImage: "text.book.closed.fill"
+            id: "catalog_explorer",
+            title: "Catalog Explorer",
+            description: "Added three peaks from the world catalog.",
+            systemImage: "book.fill"
         ),
         SeasonalAchievement(
             id: "packing_starter",
-            title: "Packing Starter",
-            description: "Applied a packing template.",
-            systemImage: "bag.fill"
+            title: "Pack Smart",
+            description: "Applied an alpine gear template.",
+            systemImage: "backpack.fill"
         ),
         SeasonalAchievement(
-            id: "trip_planner_pro",
-            title: "Trip Planner Pro",
-            description: "Created three planned trips.",
+            id: "expedition_planner",
+            title: "Expedition Planner",
+            description: "Created three planned expeditions.",
             systemImage: "calendar.badge.plus"
         ),
         SeasonalAchievement(
-            id: "streak_champion",
-            title: "Streak Champion",
-            description: "Maintained a seven-day planning streak.",
+            id: "prep_streak",
+            title: "Prep Streak",
+            description: "Maintained a seven-day preparation streak.",
             systemImage: "flame.fill"
         ),
         SeasonalAchievement(
-            id: "document_ready",
-            title: "Document Ready",
-            description: "Completed a full document checklist.",
+            id: "permit_ready",
+            title: "Permit Ready",
+            description: "Completed a full permits checklist.",
             systemImage: "doc.text.fill"
         )
     ]
 
     func isUnlocked(store: AppDataStore) -> Bool {
         switch id {
-        case "winter_wanderer":
+        case "winter_alpinist":
             return store.winterTripsPlanned >= 1
-        case "phrase_explorer":
-            return store.expandedCategories.count >= 3
+        case "catalog_explorer":
+            return store.catalogPeaksAdded >= 3
         case "packing_starter":
             return store.packingTemplatesUsed >= 1
-        case "trip_planner_pro":
+        case "expedition_planner":
             return store.trips.count >= 3
-        case "streak_champion":
+        case "prep_streak":
             return store.streakDays >= 7
-        case "document_ready":
+        case "permit_ready":
             return store.documentsChecklistsCompleted >= 1
         default:
             return false

@@ -10,8 +10,8 @@ enum MainTab: Int, CaseIterable {
     var title: String {
         switch self {
         case .home: return "Home"
-        case .vault: return "Vault"
-        case .tools: return "Tools"
+        case .vault: return "Summits"
+        case .tools: return "Prep"
         case .achievements: return "Badges"
         case .settings: return "Settings"
         }
@@ -20,8 +20,8 @@ enum MainTab: Int, CaseIterable {
     var icon: String {
         switch self {
         case .home: return "house.fill"
-        case .vault: return "airplane"
-        case .tools: return "suitcase.fill"
+        case .vault: return "mountain.2.fill"
+        case .tools: return "backpack.fill"
         case .achievements: return "star.fill"
         case .settings: return "gearshape.fill"
         }

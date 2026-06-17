@@ -11,6 +11,9 @@ struct DestinationFormView: View {
 
     @State private var name = ""
     @State private var country = ""
+    @State private var mountainRange = ""
+    @State private var elevationText = ""
+    @State private var difficulty: SummitDifficulty = .moderate
     @State private var note = ""
     @State private var hasDate = false
     @State private var plannedDate = Date()
@@ -23,9 +26,9 @@ struct DestinationFormView: View {
                 AppBackgroundView()
                 ScrollView {
                     VStack(spacing: TravelCardStyle.rowSpacing) {
-                        FormFieldCard(title: "Destination") {
+                        FormFieldCard(title: "Peak") {
                             VStack(spacing: 12) {
-                                TextField("Destination name", text: $name)
+                                TextField("Peak name", text: $name)
                                     .foregroundStyle(Color("AppTextPrimary"))
                                     .travelInputField()
                                     .shake(trigger: shakeTrigger)
@@ -37,15 +40,28 @@ struct DestinationFormView: View {
                                 TextField("Country", text: $country)
                                     .foregroundStyle(Color("AppTextPrimary"))
                                     .travelInputField()
-                                TextField("Notes", text: $note, axis: .vertical)
+                                TextField("Mountain range", text: $mountainRange)
+                                    .foregroundStyle(Color("AppTextPrimary"))
+                                    .travelInputField()
+                                TextField("Elevation (meters)", text: $elevationText)
+                                    .keyboardType(.numberPad)
+                                    .foregroundStyle(Color("AppTextPrimary"))
+                                    .travelInputField()
+                                Picker("Difficulty", selection: $difficulty) {
+                                    ForEach(SummitDifficulty.allCases) { level in
+                                        Text(level.title).tag(level)
+                                    }
+                                }
+                                .foregroundStyle(Color("AppTextPrimary"))
+                                TextField("Route notes", text: $note, axis: .vertical)
                                     .lineLimit(3...6)
                                     .foregroundStyle(Color("AppTextPrimary"))
                                     .travelInputField()
                             }
                         }
-                        FormFieldCard(title: "Schedule") {
+                        FormFieldCard(title: "Target date") {
                             VStack(spacing: 12) {
-                                Toggle("Planned date", isOn: $hasDate)
+                                Toggle("Planned ascent", isOn: $hasDate)
                                     .foregroundStyle(Color("AppTextPrimary"))
                                 if hasDate {
                                     DatePicker("Date", selection: $plannedDate, displayedComponents: .date)
@@ -59,7 +75,7 @@ struct DestinationFormView: View {
                 }
                 .clearScrollBackground()
             }
-            .navigationTitle(destination == nil ? "New Destination" : "Edit Destination")
+            .navigationTitle(destination == nil ? "Log Peak" : "Edit Peak")
             .toolbarBackground(.hidden, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -75,17 +91,21 @@ struct DestinationFormView: View {
                         .foregroundStyle(Color("AppPrimary"))
                 }
             }
-            .onAppear {
-                if let destination {
-                    name = destination.name
-                    country = destination.country
-                    note = destination.note
-                    if let date = destination.plannedDate {
-                        hasDate = true
-                        plannedDate = date
-                    }
-                }
-            }
+            .onAppear(perform: load)
+        }
+    }
+
+    private func load() {
+        guard let destination else { return }
+        name = destination.name
+        country = destination.country
+        mountainRange = destination.mountainRange
+        elevationText = destination.elevationMeters > 0 ? "\(destination.elevationMeters)" : ""
+        difficulty = destination.difficulty
+        note = destination.note
+        if let date = destination.plannedDate {
+            hasDate = true
+            plannedDate = date
         }
     }
 
@@ -94,7 +114,7 @@ struct DestinationFormView: View {
         let trimmedCountry = country.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty else {
             FeedbackManager.warning()
-            nameError = "Please enter a destination name."
+            nameError = "Please enter a peak name."
             shakeTrigger += 1
             return
         }
@@ -106,6 +126,7 @@ struct DestinationFormView: View {
         }
         nameError = nil
         FeedbackManager.actionMedium()
+        let elevation = Int(elevationText.filter(\.isNumber)) ?? 0
         let flag = flagProvider(trimmedCountry)
         let item = Destination(
             id: destination?.id ?? UUID(),
@@ -114,7 +135,10 @@ struct DestinationFormView: View {
             flagEmoji: flag,
             visited: destination?.visited ?? false,
             plannedDate: hasDate ? plannedDate : nil,
-            note: note.trimmingCharacters(in: .whitespacesAndNewlines)
+            note: note.trimmingCharacters(in: .whitespacesAndNewlines),
+            elevationMeters: elevation,
+            mountainRange: mountainRange.trimmingCharacters(in: .whitespacesAndNewlines),
+            difficulty: difficulty
         )
         onSave(item)
         dismiss()

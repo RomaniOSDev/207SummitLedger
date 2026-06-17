@@ -9,19 +9,40 @@ struct DocumentTemplate: Identifiable {
 enum DocumentTemplates {
     static let all: [DocumentTemplate] = [
         DocumentTemplate(
-            id: "beach",
-            title: "Beach Trip",
-            items: ["Passport / ID", "Travel insurance", "Flight tickets", "Hotel confirmation", "Credit cards", "Sunscreen receipt (optional)"]
+            id: "national_park",
+            title: "National Park Permit",
+            items: [
+                "Park entry permit",
+                "Climbing registration",
+                "Guide license (if required)",
+                "Emergency contact card",
+                "Rescue insurance proof",
+                "Weather briefing notes"
+            ]
         ),
         DocumentTemplate(
-            id: "business",
-            title: "Business",
-            items: ["Passport / ID", "Visa (if required)", "Business invitation", "Hotel booking", "Company insurance", "Presentation materials"]
+            id: "high_altitude",
+            title: "High Altitude",
+            items: [
+                "Expedition permit",
+                "Medical clearance",
+                "Altitude sickness plan",
+                "Evacuation insurance",
+                "Team roster",
+                "Radio / beacon registration"
+            ]
         ),
         DocumentTemplate(
-            id: "eu",
-            title: "EU Travel",
-            items: ["Passport / ID", "EHIC / health card", "Travel insurance", "Train / flight tickets", "Accommodation proof", "Emergency contacts"]
+            id: "international",
+            title: "International Ascent",
+            items: [
+                "Passport copy",
+                "Visa / entry permit",
+                "Mountaineering federation card",
+                "Liability waiver",
+                "Local operator contract",
+                "Embassy emergency number"
+            ]
         )
     ]
 }

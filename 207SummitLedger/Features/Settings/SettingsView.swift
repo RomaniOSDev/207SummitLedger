@@ -86,7 +86,7 @@ struct SettingsView: View {
                     store.resetAllData()
                 }
             } message: {
-                Text("This will permanently delete all destinations, checklists, and progress.")
+                Text("This will permanently delete all peaks, expeditions, gear lists, and progress.")
             }
         }
     }
